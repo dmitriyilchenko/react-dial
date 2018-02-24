@@ -7,10 +7,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var React = require('react');
 var pt = React.PropTypes;
 
-var Dial = React.createClass({
-  displayName: 'Dial',
+class Dial extends React.Component {
+  static displayName = 'Dial';
 
-  propTypes: (_propTypes = {
+  static propTypes = (_propTypes = {
     min: pt.number,
     max: pt.number,
     value: pt.oneOfType([pt.string, pt.number]), // value may be a string containing units
@@ -27,8 +27,9 @@ var Dial = React.createClass({
     fontFamily: pt.string,
     fontWeight: pt.oneOfType([pt.string, pt.number]),
     fontSize: pt.oneOfType([pt.string, pt.number])
-  }, _defineProperty(_propTypes, 'readOnly', pt.bool), _defineProperty(_propTypes, 'textColor', pt.string), _defineProperty(_propTypes, 'onChange', pt.func), _propTypes),
-  getDefaultProps: function getDefaultProps() {
+  }, _defineProperty(_propTypes, 'readOnly', pt.bool), _defineProperty(_propTypes, 'textColor', pt.string), _defineProperty(_propTypes, 'onChange', pt.func), _propTypes);
+
+  static defaultProps = function getDefaultProps() {
     var _ref;
 
     return _ref = {
@@ -48,9 +49,10 @@ var Dial = React.createClass({
       font: 'Sans-Serif',
       fontWeight: '400',
       fontSize: null }, _defineProperty(_ref, 'readOnly', false), _defineProperty(_ref, 'textColor', null), _defineProperty(_ref, 'onChange', function onChange(v) {}), _ref;
-  },
+  }();
+
   // return the dom structure
-  render: function render() {
+  render() {
 
     // "smart defaults"
     var fontSize = this.props.fontSize || this.props.width * 0.3;
@@ -86,31 +88,36 @@ var Dial = React.createClass({
       React.createElement('canvas', { style: canvasStyles, width: this.props.width, height: this.props.width, ref: 'canvas' }),
       React.createElement('input', { style: inputStyles, value: this.props.value, onChange: this.handleChange, readOnly: this.props.readOnly })
     );
-  },
-  componentDidMount: function componentDidMount() {
+  }
+
+  componentDidMount() {
     this.updateCanvas();
-  },
-  componentDidUpdate: function componentDidUpdate() {
+  }
+
+  componentDidUpdate() {
     this.updateCanvas();
-  },
-  handleChange: function handleChange(e) {
+  }
+
+  handleChange = (e) => {
     var value = unUnits(e.target.value); // strip any formatting from the value and convert it to a number
-  },
-  handleKeyDown: function handleKeyDown(e) {
+  };
+
+  handleKeyDown = (e) => {
 
     var key = e.key;
     var newValue = unUnits(this.props.value);
 
     if (key === 'ArrowUp') this.triggerUpdate(newValue + 1);else if (key === 'ArrowDown') this.triggerUpdate(newValue - 1);
-  },
-  triggerUpdate: function triggerUpdate(newValue) {
+  };
+
+  triggerUpdate = (newValue) => {
     //common hook for all sources of change to send new values to
     if (newValue >= this.props.min && newValue <= this.props.max) {
       this.props.onChange(newValue);
     }
-  },
+  };
 
-  updateCanvas: function updateCanvas() {
+  updateCanvas = () => {
 
     // get a reference to the canvas context
     var canvas = this.refs.canvas.getContext('2d');
@@ -151,8 +158,8 @@ var Dial = React.createClass({
     canvas.strokeStyle = this.props.fgColor;
     canvas.arc(centerxy, centerxy, radius, startAngle, readingAngle, anticlockwise);
     canvas.stroke();
-  }
-});
+  };
+}
 
 module.exports = Dial;
 
@@ -162,7 +169,7 @@ function radians(degrees) {
 
 function degrees(radians) {
   return radians * 180 / Math.PI;
-};
+}
 
 function unUnits(s) {
   // possible inputs: 0, 1, "0", "1", undefined, NaN
