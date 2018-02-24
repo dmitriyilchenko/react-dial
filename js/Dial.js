@@ -5,7 +5,7 @@ var _propTypes;
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var React = require('react');
-var pt = React.PropTypes;
+var pt = require('prop-types');
 
 class Dial extends React.Component {
   static displayName = 'Dial';

@@ -1,6 +1,5 @@
 var React = require('react')
-var PropTypes = require('prop-types')
-var pt = PropTypes
+var pt = require('prop-types')
 
 class Dial extends React.Component {
   static propTypes = {
